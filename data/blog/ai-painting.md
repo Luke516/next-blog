@@ -2,7 +2,7 @@
 title: 讓AI幫你畫圖 ─ AI繪圖軟體簡介與比較
 date: '2022-09-08'
 tags: ['AI', 'tool']
-draft: false
+draft: true
 summary: 這篇文章讓你快速了解功能強大的AI繪圖軟體Midjourney，利用簡單的問字說明就可以讓AI替你畫出驚豔的作品！
 # TODO: Add images
 images: []
