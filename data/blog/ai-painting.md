@@ -39,6 +39,8 @@ DALLE 是由 Google 的 AI 團隊所推出，功能極為強大的 AI 繪圖軟�
 
 Disco Diffusion
 
+### 3. Stable Diffusion
+
 ### 4. Midjourney
 
 最後一個要介紹的就是本人目前最常使用的服務：Midjourney 了。
