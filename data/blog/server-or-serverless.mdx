@@ -1,0 +1,89 @@
+---
+title: Heroku 即將取消免費，還有哪些免費的架站方案？
+date: '2022-09-12'
+tags: ['cloud']
+draft: true
+summary: 免費雲端架站方案
+---
+
+## 前言
+
+Heroku 的免費方案一直以來都是在雲端測試部署小型伺服器的一個優良選擇。遺憾的是，不久前 Heroku 團隊宣布他們的免費方案將會在 2022 年 11 月停止支援，使用免費方案的用戶將必須升級到付費方案，否則現有的服務將會停止運作。
+
+![email screenshot](https://imgur.com/258Taxt.png)
+
+對於這個不幸的消息，後端免費仔們究竟該何去何從？本文將簡單介紹幾個替代方案供讀者們參考。
+
+## Fly.io
+
+> 123
+
+Fly.io Free Tier: docker/templates, 256 MB RAM, 2340 hours per month, 3 GB static drive, ipv6, free 10 SSL certificates.
+bandwith - 160GB/month.
+Databases: Postgres available as regular Fly app, same with Redis, no MySQL database out the box.
+
+[Pricing](https://fly.io/docs/about/pricing/) | [About Free Postgres](https://fly.io/docs/reference/postgres/#about-free-postgres-on-fly) | [Deployment](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#speed-run-your-way-to-continuous-deployment)
+
+## Railway.app
+
+Railway.app Free Tier: docker/templates, 512 MB RAM, 100 GB egress traffic per month, free SSL certificate, $5 credit/month, 1 GB permanent drive.
+Databases: MySQL, Postgres and Redis.
+
+[Pricing](https://railway.app/pricing) | [About Free Starter Plan](https://docs.railway.app/reference/plans#starter-plan) | [Deployment](https://docs.railway.app/deploy/deployments)
+
+## Render.com
+
+docker/templates, 512 MB RAM, 100 GBB egress traffic +HTTP/2, SSL cert, 750 hours/month, free SSL certificate, CDN.
+DB: native Postgres and Redis, no MySQL database but can be deployed as Docker container.
+
+[Pricing](https://render.com/pricing) | [Limits for Free Tier](https://render.com/docs/free#free-web-services) | [Deployment](https://render.com/docs/deploys)
+
+## Adaptable.io
+
+[Pricing](https://adaptable.io/pricing) | [Deployment](https://adaptable.io/docs/deploying-your-existing-app) | [App requirements](https://adaptable.io/docs/app-guides/deploy-nodejs-app#containerized-app-requirements)
+
+## Cyclic.sh
+
+[Pricing](https://www.cyclic.sh/pricing) | [Limits](https://docs.cyclic.sh/overview/limits) | [Deploy](https://docs.cyclic.sh/overview/deploy)
+
+## Google App Engine
+
+[Pricing]() | [Limits]() | [Deploy]()
+
+## Vercel
+
+題外話，這個部落格網站也是用 Vercel 部屬的~
+
+[Pricing](https://vercel.com/pricing) | [Limits](https://vercel.com/docs/concepts/limits/overview) | [Deploy](https://vercel.com/docs/concepts/deployments/overview)
+
+{/* text */}
+
+{/* ## Deta.sh */}
+
+{/* ## netlify */}
+
+{/* ## oracle */}
+
+{/* ## porter */}
+
+{/* ## Glitch */}
+
+## 圖表比較
+
+|                 |   fly.io   |   Railway.app   | render.com | Adaptable.io |  Cyclic.sh   |   Vercel   | Google App Engine |
+| :-------------: | :--------: | :-------------: | :--------: | :----------: | :----------: | :--------: | :---------------: |
+|   未使用關機    |     No     |       No        | 15 minutes |    Yes\*     |      No      | Serverless |                   |
+|   需要信用卡    |    Yes     |       No        |     No     |      No      |      No      |     No     |                   |
+|  免費用量限制   | 2340 hours | $5 or 500 hours | 750 hours  |    None\*    | 100,000 req? |            |                   |
+|     記憶體      |   256MB    |      512MB      |   512MB    |    256MB     |     1GB      |            |                   |
+|      容量       |    3GB     |       1GB       |            |     1GB      |   512MB\*    |            |                   |
+|    存取磁碟     |    Yes     |                 |     No     |    Yes\*     |    Yes\*     |            |                   |
+|    網路流量     |   160GB    |      100GB      |   100GB    |    100GB     |              |            |                   |
+| 支援 Dockerfile |    Yes     |       Yes       |    Yes     |     No\*     |      No      |            |                   |
+|   支援 GitHub   |     No     |       Yes       |    Yes     |     Yes      |     Yes      |            |                   |
+
+## 無伺服器 (Serverless) 方案
+
+## 小結
+
+如果文章中有任何錯誤或疑問，歡迎提出！

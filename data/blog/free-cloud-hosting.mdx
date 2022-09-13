@@ -2,8 +2,8 @@
 title: Heroku 即將取消免費，還有哪些免費的架站方案？
 date: '2022-09-12'
 tags: ['cloud']
-draft: true
-summary: 免費雲端架站方案
+draft: false
+summary: 免費雲端架站的不同方案比較
 ---
 
 ## 前言
@@ -14,74 +14,89 @@ Heroku 的免費方案一直以來都是在雲端測試部署小型伺服器的�
 
 對於這個不幸的消息，後端免費仔們究竟該何去何從？本文將簡單介紹幾個替代方案供讀者們參考。
 
-## Fly.io
+## Herok 免費替代方案
 
-> 123
+這裡我們提出四個跟先前 Heroku 功能比較接近的免費 PaaS 替代方案，分別是：[Fly](https://fly.io)、[Railway](https://railway.app)、[Render](https://render.com) 跟 [Adaptable](https://adaptable.io)。
 
-Fly.io Free Tier: docker/templates, 256 MB RAM, 2340 hours per month, 3 GB static drive, ipv6, free 10 SSL certificates.
-bandwith - 160GB/month.
-Databases: Postgres available as regular Fly app, same with Redis, no MySQL database out the box.
+### Fly.io
 
-[Pricing](https://fly.io/docs/about/pricing/) | [About Free Postgres](https://fly.io/docs/reference/postgres/#about-free-postgres-on-fly) | [Deployment](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#speed-run-your-way-to-continuous-deployment)
+{/* ![](https://miro.medium.com/max/620/1*elTb6zd5-ihNap5XPCDhHg.png) */}
 
-## Railway.app
+Fly.io 的免費方案包含：
 
-Railway.app Free Tier: docker/templates, 512 MB RAM, 100 GB egress traffic per month, free SSL certificate, $5 credit/month, 1 GB permanent drive.
-Databases: MySQL, Postgres and Redis.
+- 支援 docker 與常見語言及框架如 Node、Go、Ruby、Python 等 ([詳細](https://fly.io/docs/languages-and-frameworks/))
+- 最高 2340 運算小時/每月 (3 VMs)
+- 256 MB 記憶體
+- 3 GB 硬碟
+- 支援 ipv6
+- 多至 10 個免費的 SSL 憑證
+- 160 GB 網路流量/每月
+- 支援 Postgres 與 Redis 儲存方式
 
-[Pricing](https://railway.app/pricing) | [About Free Starter Plan](https://docs.railway.app/reference/plans#starter-plan) | [Deployment](https://docs.railway.app/deploy/deployments)
+詳細資料可以參考以下連結：
 
-## Render.com
+[定價](https://fly.io/docs/about/pricing/) | [關於免費 Postgres](https://fly.io/docs/reference/postgres/#about-free-postgres-on-fly) | [部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#speed-run-your-way-to-continuous-deployment)
 
-docker/templates, 512 MB RAM, 100 GBB egress traffic +HTTP/2, SSL cert, 750 hours/month, free SSL certificate, CDN.
-DB: native Postgres and Redis, no MySQL database but can be deployed as Docker container.
+值得注意的是 Fly.io 需要安裝它的命令列工具 [flyctl](https://fly.io/docs/hands-on/install-flyctl/) ，如果不想額外安裝工具或是偏好使用純網頁管理的話，可能需要考量這點。
 
-[Pricing](https://render.com/pricing) | [Limits for Free Tier](https://render.com/docs/free#free-web-services) | [Deployment](https://render.com/docs/deploys)
+另外，雖然有免費方案但是 Fly.io 仍然**需要提供信用卡**才能使用。
 
-## Adaptable.io
+### Railway.app
 
-[Pricing](https://adaptable.io/pricing) | [Deployment](https://adaptable.io/docs/deploying-your-existing-app) | [App requirements](https://adaptable.io/docs/app-guides/deploy-nodejs-app#containerized-app-requirements)
+Railway.app 的免費方案包含：
 
-## Cyclic.sh
+- 支援 docker
+- 512 MB 記憶體,
+- 100 GB 網路流量/每月
+- 提供免費的 SSL 憑證
+  {/* $5 credit/month, */}
+- 1 GB 持續硬碟
+- 支援 MySQL， Postgres 和 Redis 資料庫
 
-[Pricing](https://www.cyclic.sh/pricing) | [Limits](https://docs.cyclic.sh/overview/limits) | [Deploy](https://docs.cyclic.sh/overview/deploy)
+參考以下連結：
 
-## Google App Engine
+[定價](https://railway.app/pricing) | [關於免費方案](https://docs.railway.app/reference/plans#starter-plan) | [部署](https://docs.railway.app/deploy/deployments)
 
-[Pricing]() | [Limits]() | [Deploy]()
+### Render.com
 
-## Vercel
+Render.com 的免費方案包含：
 
-題外話，這個部落格網站也是用 Vercel 部屬的~
+- 支援 docker
+- 512 MB 記憶體
+- 100 網路流量/每月
+  {/* +HTTP/2, SSL cert, */}
+- 750 運算小時/每月
+- 提供免費的 SSL 憑證
+- 提供 CDN
+- 支援 Postgres 與 Redis， MySQL 可以透過 Docker 容器部署
 
-[Pricing](https://vercel.com/pricing) | [Limits](https://vercel.com/docs/concepts/limits/overview) | [Deploy](https://vercel.com/docs/concepts/deployments/overview)
+參考以下連結：
 
-{/* text */}
+[定價](https://render.com/pricing) | [免費方案限制](https://render.com/docs/free#free-web-services) | [部署](https://render.com/docs/deploys)
 
-{/* ## Deta.sh */}
+### Adaptable.io
 
-{/* ## netlify */}
+Adaptable.io 的免費方案包含：
 
-{/* ## oracle */}
+參考以下連結：
 
-{/* ## porter */}
-
-{/* ## Glitch */}
+[定價](https://adaptable.io/pricing) | [部署](https://adaptable.io/docs/deploying-your-existing-app) | [App 要求](https://adaptable.io/docs/app-guides/deploy-nodejs-app#containerized-app-requirements)
 
 ## 圖表比較
 
-|                 | fly.io     | Railway.app     | render.com | Adaptable.io | Cyclic.sh    | Vercel     | Google App Engine |
-| --------------- | ---------- | --------------- | ---------- | ------------ | ------------ | ---------- | ----------------- |
-| 未使用關機      | No         | No              | 15 minutes | Yes\*        | No           | Serverless |                   |
-| 需要信用卡      | Yes        | No              | No         | No           | No           | No         |                   |
-| 免費用量限制    | 2340 hours | $5 or 500 hours | 750 hours  | None\*       | 100,000 req? |            |                   |
-| 記憶體          | 256MB      | 512MB           | 512MB      | 256MB        | 1GB          |            |                   |
-| 容量            | 3GB        | 1GB             |            | 1GB          | 512MB\*      |            |                   |
-| 存取磁碟        | Yes        |                 | No         | Yes\*        | Yes\*        |            |                   |
-| 網路流量        | 160GB      | 100GB           | 100GB      | 100GB        |              |            |                   |
-| 支援 Dockerfile | Yes        | Yes             | Yes        | No\*         | No           |            |                   |
-| 支援 GitHub     | No         | Yes             | Yes        | Yes          | Yes          |            |                   |
-
-## 小結
-
-如果文章中有任何錯誤或疑問，歡迎提出！
+|                 |  fly.io   |     Railway.app     | render.com | Adaptable.io |
+| :-------------: | :-------: | :-----------------: | :--------: | :----------: |
+|   未使用關機    |    無     |         無          |  15 分鐘   |   有可能\*   |
+|   需要信用卡    |    是     |         否          |     否     |      否      |
+|  免費用量限制   | 2340 小時 | $5 額度 或 500 小時 |  750 小時  |   無限制\*   |
+|     記憶體      |   256MB   |        512MB        |   512MB    |    256MB     |
+|    磁碟容量     |    3GB    |         1GB         |            |     1GB      |
+|    存取磁碟     |   可以    |                     |     否     |    可以\*    |
+|    網路流量     |   160GB   |        100GB        |   100GB    |    100GB     |
+| 支援 Dockerfile |    是     |         是          |     是     | 功能尚未發布 |
+|   支援 GitHub   |    否     |         是          |     是     |      是      |
+| 免費自訂網域名  |    有     |    前 25 個網域     |     有     |      無      |
+|    SSL 憑證     |    有     |         有          |     有     |      有      |
+| 免費 PostgreSQL |    有     |         有          |   90 天    |      有      |
+|  免費 MongoDB   |    無     |         無          |     無     |      有      |
+|   免費 Redis    |    無     |         有          |     有     |      無      |
