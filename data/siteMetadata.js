@@ -5,7 +5,7 @@ const siteMetadata = {
   description: 'A blog created with Next.js and Tailwind.css',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://https://www.luke516.blog/',
+  siteUrl: 'https://www.luke516.blog/',
   siteRepo: 'https://github.com/Luke516/next-blog',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
