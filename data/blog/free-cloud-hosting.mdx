@@ -1,9 +1,9 @@
 ---
 title: Heroku 即將取消免費，還有哪些免費的架站方案？
 date: '2022-09-12'
-tags: ['cloud']
+tags: ['web', 'cloud']
 draft: false
-summary: 免費雲端架站的不同方案比較
+summary: 本文比較了提供免費方案的不同雲端架站平台比較，提供想找到現有 Heroku 服務替代方案的人參考
 ---
 
 ## 前言
@@ -12,15 +12,13 @@ Heroku 的免費方案一直以來都是在雲端測試部署小型伺服器的�
 
 ![email screenshot](https://imgur.com/258Taxt.png)
 
-對於這個不幸的消息，後端免費仔們究竟該何去何從？本文將簡單介紹幾個替代方案供讀者們參考。
+對於這個不幸的消息，現有的 Heroku 使用者們究竟該何去何從？本文將簡單介紹幾個替代方案供讀者們參考。
 
 ## Herok 免費替代方案
 
 這裡我們提出四個跟先前 Heroku 功能比較接近的免費 PaaS 替代方案，分別是：[Fly](https://fly.io)、[Railway](https://railway.app)、[Render](https://render.com) 跟 [Adaptable](https://adaptable.io)。
 
-### Fly.io
-
-{/* ![](https://miro.medium.com/max/620/1*elTb6zd5-ihNap5XPCDhHg.png) */}
+### [Fly.io](https://fly.io)
 
 Fly.io 的免費方案包含：
 
@@ -33,15 +31,20 @@ Fly.io 的免費方案包含：
 - 160 GB 網路流量/每月
 - 支援 Postgres 與 Redis 儲存方式
 
-詳細資料可以參考以下連結：
+整體看來，Fly.io 的免費方案最高可以開 3 個 shared-cpu-1x 256mb 等級的虛擬機器，提供的用量算是所有免費方案中比較高的，對於不同語言及框架的支援度也很高，加上有自動部署到靠近使用者地理位置的功能，
+也難怪會是取代 Heroku 的常見方案之一。
+
+然而，在決定使用之前還是有幾點值得注意：
+
+- 雖然有免費方案但是 Fly.io 仍然**需要提供信用卡資訊**
+- 需要安裝命令列工具 [flyctl](https://fly.io/docs/hands-on/install-flyctl/) 才能使用
+- 另外，沒有支援連接 GitHub 的功能也是一個比較可惜的地方
+
+更詳細資料可以參考以下連結：
 
 [定價](https://fly.io/docs/about/pricing/) | [關於免費 Postgres](https://fly.io/docs/reference/postgres/#about-free-postgres-on-fly) | [部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#speed-run-your-way-to-continuous-deployment)
 
-值得注意的是 Fly.io 需要安裝它的命令列工具 [flyctl](https://fly.io/docs/hands-on/install-flyctl/) ，如果不想額外安裝工具或是偏好使用純網頁管理的話，可能需要考量這點。
-
-另外，雖然有免費方案但是 Fly.io 仍然**需要提供信用卡**才能使用。
-
-### Railway.app
+### [Railway.app](https://railway.app)
 
 Railway.app 的免費方案包含：
 
@@ -51,32 +54,53 @@ Railway.app 的免費方案包含：
 - 提供免費的 SSL 憑證
   {/* $5 credit/month, */}
 - 1 GB 持續硬碟
-- 支援 MySQL， Postgres 和 Redis 資料庫
+- 支援 MongoDB，MySQL， Postgres 和 Redis 資料庫
 
-參考以下連結：
+整體看起來，Railway 也是功能十分齊全的一個替代方案，也是支援最多資料庫類型的平台。
+而為了吸引從 Heroku 遷移的使用者， Railway 官方甚至也提供了一份說明比較他們和 Heroku 之間的差異，可以參考看看[連結](https://docs.railway.app/reference/compare-to-heroku)
+
+然而，Railway 與其他方案相比最大的限制，就在於它一個月提供的免費時數只有 500 小時。換句話說，**無法每天 24 小時執行**，否則很可能會提前用完額度。需要長時間運行的後端服務可能需要慎重考慮此限制。
+另外，每月額度更新後也會需要重新部署應用程式，使用上稍微麻煩了一點。
+
+詳細資料可以參考以下連結：
 
 [定價](https://railway.app/pricing) | [關於免費方案](https://docs.railway.app/reference/plans#starter-plan) | [部署](https://docs.railway.app/deploy/deployments)
 
-### Render.com
+### [Render.com](https://render.com)
 
 Render.com 的免費方案包含：
 
 - 支援 docker
 - 512 MB 記憶體
-- 100 網路流量/每月
+- 100 GB 網路流量/每月
   {/* +HTTP/2, SSL cert, */}
 - 750 運算小時/每月
 - 提供免費的 SSL 憑證
 - 提供 CDN
 - 支援 Postgres 與 Redis， MySQL 可以透過 Docker 容器部署
 
-參考以下連結：
+Render.com 也是一個功能十分強大的替代方案，幾乎支援所有常見語言，還有提供 DDOS 防護跟靜態網站的 CDN，網站的說明與介面也是我個人使用起來覺得最流暢的。
+免費方案提供每月 750 小時，相當於可以不間斷的運行一個服務，以免費方案來說應該算相當夠用了。
+
+與前面提到的解決方案相比，Render.com 比較大的限制是它的免費方案沒有持續性的磁碟，並且機器有可能隨時被重啟。可能比較適合無狀態 (stateless) 的後端服務。
+
+詳細資料可以參考以下連結：
 
 [定價](https://render.com/pricing) | [免費方案限制](https://render.com/docs/free#free-web-services) | [部署](https://render.com/docs/deploys)
 
-### Adaptable.io
+### [Adaptable.io](https://adaptable.io)
 
 Adaptable.io 的免費方案包含：
+
+- 256 MB 記憶體
+- 100 GB 網路流量/每月
+- 1 GB 硬碟(不持續)
+- 提供免費的 SSL 憑證
+- 支援 Postgres，MongoDB 與 Microsoft SQL Server
+
+Adaptable.io 算是相對來說比較新的服務，目前看起來最大的優點是免費方案沒有硬性的用量上限，只要在免費規格內可以建立任意數量的應用程式。
+
+不過除此之外，目前仍沒有支援 Docker 是比較大的侷限。同時也有機器會被重啟，需要應用程式滿足無狀態的需求。
 
 參考以下連結：
 
@@ -86,17 +110,83 @@ Adaptable.io 的免費方案包含：
 
 |                 |  fly.io   |     Railway.app     | render.com | Adaptable.io |
 | :-------------: | :-------: | :-----------------: | :--------: | :----------: |
-|   未使用關機    |    無     |         無          |  15 分鐘   |   有可能\*   |
+|   未使用關機    |    無     |         無          |  15 分鐘   |    有可能    |
 |   需要信用卡    |    是     |         否          |     否     |      否      |
-|  免費用量限制   | 2340 小時 | $5 額度 或 500 小時 |  750 小時  |   無限制\*   |
+|  免費用量限制   | 2340 小時 | $5 額度 或 500 小時 |  750 小時  |    無限制    |
 |     記憶體      |   256MB   |        512MB        |   512MB    |    256MB     |
-|    磁碟容量     |    3GB    |         1GB         |            |     1GB      |
-|    存取磁碟     |   可以    |                     |     否     |    可以\*    |
+|    磁碟容量     |    3GB    |         1GB         |     ?      |     1GB      |
+|  保存磁碟資料   |   可以    |        可以         |     否     |      否      |
 |    網路流量     |   160GB   |        100GB        |   100GB    |    100GB     |
 | 支援 Dockerfile |    是     |         是          |     是     | 功能尚未發布 |
-|   支援 GitHub   |    否     |         是          |     是     |      是      |
+|  可連結 GitHub  |    否     |         是          |     是     |  是(需公開)  |
 | 免費自訂網域名  |    有     |    前 25 個網域     |     有     |      無      |
 |    SSL 憑證     |    有     |         有          |     有     |      有      |
-| 免費 PostgreSQL |    有     |         有          |   90 天    |      有      |
-|  免費 MongoDB   |    無     |         無          |     無     |      有      |
-|   免費 Redis    |    無     |         有          |     有     |      無      |
+|   PostgreSQL    |    有     |         有          |   90 天    |      有      |
+|     MongoDB     |    無     |         有          |     無     |      有      |
+|      Redis      |    有     |         有          |     有     |      無      |
+
+## 無伺服器 (Serverless) 替代方案
+
+在上面提到的替代方案，基本上都還是有伺服器的架構，也跟原本 Heroku 比較類似。但如果你的應用程式本身是無狀態的，
+也不需要在同一台機器上執行或是用到 WebSocket 等功能的話，其實也有很多非常好用的無伺服器的方案！
+
+在這裡推薦 [Vercel](https://vercel.com) 跟 [Cyclic.sh](https://www.cyclic.sh) 兩個方案：
+
+### [Cyclic.sh](https://www.cyclic.sh)
+
+Cyclic.sh 的免費方案提供：
+
+- 100,000 個請求/每月
+- 1GB AWS S3 雲端儲存空間
+- 1GB AWS DynamoDB 資料庫 (NoSQL)
+- 512 MB 暫時性磁碟
+
+Cyclic.sh 是基於 Amazon AWS 上面一整套的無伺服器架構，透過與 GitHub 連結讓使用者可以輕鬆部署 Node.js 應用程式到雲端。
+對於只用 Node.js 並熟悉無伺服器架構的使用者是個不錯的選擇。
+
+Cyclic.sh 最大的限制就是只支援 Node.js 應用程式，也不支援 Docker。
+
+更多詳細資料可以參考：
+
+[定價](https://www.cyclic.sh/pricing) | [限制](https://docs.cyclic.sh/overview/limits) | [部署](https://docs.cyclic.sh/overview/deploy)
+
+### [Vercel](https://vercel.com)
+
+最後要介紹的選手，也是我個人最喜歡的一個選項就是 Vercel 了，現在這個部落格網站也是用 Vercel 部署的！
+
+Vercel 的免費方案提供：
+
+- 支援 Node.js、Python、GO 和 Ruby
+- 100 GB 流量上限/每月
+- 1 GB 記憶體
+
+雖然基本上可以算是為了 Next.js 量身打造的平台，但 Vercel 的功能即使用來部屬其他種類的應用程式也非常好用！
+功能強大的 Dashboard 還有內建的 CDN 跟 Analytics，可以跟不同的 git provider (GitHub，GitLab，BitBucket) 整合，
+加上連接不同第三方服務的教學也都十分完整。如果能接受無伺服器環境的話試試看 Vercel 我覺得應該是不會後悔的！
+
+要說比較大的缺點，應該就是沒有內建的資料庫或雲端儲存空間，也沒有支援 Docker。
+
+更多詳細資料可以參考：
+
+[定價](https://vercel.com/pricing) | [限制](https://vercel.com/docs/concepts/limits/overview) | [部署](https://vercel.com/docs/concepts/deployments/overview)
+
+## 結論
+
+如果能接受無伺服器環境的話，我會推薦 Vercel。
+但如果考慮到要跟 Heroku 功能比較接近的話，我可能會選擇 Fly.io。
+Render.com 也會是個我想試試看的選擇。
+
+其他還有一些可能也很不錯的選手，這裡因為個人篇幅與時間有限的關係在這裡就先遺憾的略過了：
+
+- 從網路資料上看起來，Google 的 [App Engine](https://cloud.google.com/appengine) 還有 [Cloud Run](https://cloud.google.com/run/) (無伺服器) 感覺功能也十分強大。
+- oracle 免費方案、Glitch、deta.sh、Porter、Northflank、Qoddi.com 等服務感覺也都值得一試。
+
+有興趣的人也可以試試看或在留言補充！
+
+## 參考資料
+
+- https://forum.gamer.com.tw/C.php?bsn=60076&snA=7302897
+- https://github.com/DmitryScaletta/free-heroku-alternatives
+- https://www.reddit.com/r/Heroku/comments/wxn5b5/following_herokus_decision_to_remove_free_plans/
+
+文章內容來自作者本身經驗跟網路上的參考資料，如果有任何錯誤歡迎提出討論 QWQ!
