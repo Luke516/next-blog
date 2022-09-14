@@ -1,5 +1,5 @@
 ---
-title: 使用Next.js建立自己的部落格網站！
+title: 使用 Next.js 建立自己的部落格網站
 date: '2022-09-08'
 tags: ['web', 'Next.js']
 draft: false
