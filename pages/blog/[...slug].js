@@ -16,14 +16,14 @@ export async function getStaticPaths() {
       {
         params: {
           slug: formatSlug(p).split('/'),
-          locale: 'en',
         },
+        locale: 'en',
       },
       {
         params: {
           slug: formatSlug(p).split('/'),
-          locale: 'zh',
         },
+        locale: 'zh',
       },
     ]),
     fallback: false,

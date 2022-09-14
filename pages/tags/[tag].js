@@ -15,12 +15,22 @@ const root = process.cwd()
 export async function getStaticPaths() {
   const tags = await getAllTags('blog')
 
+  // TODO: read locales from config
   return {
-    paths: Object.keys(tags).map((tag) => ({
-      params: {
-        tag,
+    paths: Object.keys(tags).flatMap((tag) => [
+      {
+        params: {
+          tag,
+        },
+        locale: 'en',
       },
-    })),
+      {
+        params: {
+          tag,
+        },
+        locale: 'en',
+      },
+    ]),
     fallback: false,
   }
 }
