@@ -10,12 +10,22 @@ const DEFAULT_LAYOUT = 'PostLayout' //'PostLayout'
 
 export async function getStaticPaths() {
   const posts = getFiles('blog')
+  // TODO: read locales from config
   return {
-    paths: posts.map((p) => ({
-      params: {
-        slug: formatSlug(p).split('/'),
+    paths: posts.flatMap((p) => [
+      {
+        params: {
+          slug: formatSlug(p).split('/'),
+          locale: 'en',
+        },
       },
-    })),
+      {
+        params: {
+          slug: formatSlug(p).split('/'),
+          locale: 'zh',
+        },
+      },
+    ]),
     fallback: false,
   }
 }
