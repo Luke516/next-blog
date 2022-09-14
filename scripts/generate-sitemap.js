@@ -47,11 +47,17 @@ const siteMetadata = require('../data/siteMetadata')
                 if (page.search('pages/404.') > -1 || page.search(`pages/blog/[...slug].`) > -1) {
                   return
                 }
-                return `
-                        <url>
-                            <loc>${siteMetadata.siteUrl}${route}</loc>
-                        </url>
+
+                return [...siteMetadata.subdomains, 'www']
+                  .map((subdomain) => {
+                    const siteUrl = siteMetadata.siteUrl.replace('www', subdomain)
+                    return `
+                      <url>
+                        <loc>${siteUrl}${route}</loc>
+                      </url>
                     `
+                  })
+                  .join('\n')
               })
               .join('')}
         </urlset>
