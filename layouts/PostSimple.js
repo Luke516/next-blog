@@ -6,8 +6,10 @@ import siteMetadata from '@/data/siteMetadata'
 import formatDate from '@/lib/utils/formatDate'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import { useTranslation } from 'next-i18next'
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
+  const { t } = useTranslation('common')
   const { date, title } = frontMatter
 
   return (
