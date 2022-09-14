@@ -6,8 +6,11 @@ import SectionContainer from './SectionContainer'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
+import { useTranslation } from 'next-i18next'
 
 const LayoutWrapper = ({ children }) => {
+  const { t } = useTranslation('common')
+
   return (
     <SectionContainer>
       <div className="flex h-screen flex-col justify-between">
@@ -36,7 +39,7 @@ const LayoutWrapper = ({ children }) => {
                   href={link.href}
                   className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
                 >
-                  {link.title}
+                  {t(link.title)}
                 </Link>
               ))}
             </div>

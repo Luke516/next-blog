@@ -4,25 +4,29 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { getAllFilesFrontMatter } from '@/lib/mdx'
 import formatDate from '@/lib/utils/formatDate'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 import NewsletterForm from '@/components/NewsletterForm'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const MAX_DISPLAY = 5
 
-export async function getStaticProps() {
-  const posts = await getAllFilesFrontMatter('blog')
-
-  return { props: { posts } }
-}
-
 export default function Home({ posts }) {
+  const route = useRouter()
+  const { t } = useTranslation('common')
+
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
+      <div id="QWQ" style={{ display: 'none' }}>
+        {' '}
+        {route.locale}{' '}
+      </div>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
+            {t('Latest')}
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             {siteMetadata.description}
@@ -69,7 +73,7 @@ export default function Home({ posts }) {
                           className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                           aria-label={`Read "${title}"`}
                         >
-                          Read more &rarr;
+                          {t('Read more')} &rarr;
                         </Link>
                       </div>
                     </div>
@@ -87,7 +91,7 @@ export default function Home({ posts }) {
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
             aria-label="all posts"
           >
-            All Posts &rarr;
+            {t('All Posts')} &rarr;
           </Link>
         </div>
       )}
@@ -98,4 +102,15 @@ export default function Home({ posts }) {
       )}
     </>
   )
+}
+
+export async function getStaticProps({ locale }) {
+  const posts = await getAllFilesFrontMatter('blog')
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      posts,
+    },
+  }
 }

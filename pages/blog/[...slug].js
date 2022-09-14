@@ -3,6 +3,8 @@ import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const DEFAULT_LAYOUT = 'PostLayout'
 
@@ -18,7 +20,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale }) {
   const allPosts = await getAllFilesFrontMatter('blog')
   const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
   const prev = allPosts[postIndex + 1] || null
@@ -37,10 +39,19 @@ export async function getStaticProps({ params }) {
     fs.writeFileSync('./public/feed.xml', rss)
   }
 
-  return { props: { post, authorDetails, prev, next } }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      post,
+      authorDetails,
+      prev,
+      next,
+    },
+  }
 }
 
 export default function Blog({ post, authorDetails, prev, next }) {
+  const { t } = useTranslation('common')
   const { mdxSource, toc, frontMatter } = post
 
   return (

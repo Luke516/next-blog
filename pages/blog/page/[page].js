@@ -3,6 +3,8 @@ import siteMetadata from '@/data/siteMetadata'
 import { getAllFilesFrontMatter } from '@/lib/mdx'
 import ListLayout from '@/layouts/ListLayout'
 import { POSTS_PER_PAGE } from '../../blog'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export async function getStaticPaths() {
   const totalPosts = await getAllFilesFrontMatter('blog')
@@ -19,6 +21,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const {
+    locale,
     params: { page },
   } = context
   const posts = await getAllFilesFrontMatter('blog')
@@ -34,6 +37,7 @@ export async function getStaticProps(context) {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       posts,
       initialDisplayPosts,
       pagination,
@@ -42,6 +46,7 @@ export async function getStaticProps(context) {
 }
 
 export default function PostPage({ posts, initialDisplayPosts, pagination }) {
+  const { t } = useTranslation('common')
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
@@ -49,7 +54,7 @@ export default function PostPage({ posts, initialDisplayPosts, pagination }) {
         posts={posts}
         initialDisplayPosts={initialDisplayPosts}
         pagination={pagination}
-        title="All Posts"
+        title={t('All Posts')}
       />
     </>
   )
