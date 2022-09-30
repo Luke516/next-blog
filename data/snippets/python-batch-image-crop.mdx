@@ -1,0 +1,31 @@
+---
+title: 用 Python 批量去除圖片白邊
+date: '2022-09-22'
+tags: ['python']
+draft: false
+---
+
+```python
+
+from os import listdir
+from os.path import isfile, join
+from PIL import Image, ImageDraw, ImageOps
+
+# The dir to search for
+mypath = "."
+
+# Get files
+files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+for f in files:
+    print(f)
+    try:
+        im = Image.open(f)
+        bbox = im.getbbox()
+        trimmed = im.crop(bbox)
+        trimmed.save(f)
+        im.close()
+    except:
+        print("failed to load image")
+
+```
