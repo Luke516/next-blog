@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.luke516.com
+Host: https://www.luke516.blog
 
 # Sitemaps
-Sitemap: https://www.luke516.com/sitemap.xml
+Sitemap: https://www.luke516.blog/sitemap.xml
