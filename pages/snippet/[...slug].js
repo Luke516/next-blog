@@ -8,6 +8,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const DEFAULT_LAYOUT = 'PostSimple'
 
+// TODO: change var names (post -> snippets)
 export async function getStaticPaths() {
   const posts = getFiles('snippets')
   // TODO: read locales from config
