@@ -3,21 +3,15 @@ title: NodeJS 使用 pino 在 AWS Elastic beanstalk 上正確顯示 log
 date: '2022-10-04'
 tags: ['aws', 'node.js']
 draft: false
-summary:
+summary: 如何在 AWS Elastic beanstalk 上使用 JSON 格式的日誌，以及將不同層級寫入對應檔案
 images: []
 ---
 
 ## 前言
 
-log (日誌)一直以來都是我們在開發程式時重要的幫手，對於了解程式的運作狀態以及找出錯誤都是非常重要的存在。
-而反過來說，沒效率的 log 也可能會造成開發人員的困擾與誤解，所以說好的 log 設定也是對開發系統來說很重要的一個課題！
+log (日誌)一直以來都是我們在開發程式時重要的幫手，對於了解程式的運作狀態以及找出錯誤都是非常重要的存在。而反過來說，沒效率的 log 也可能會造成開發人員的困擾與誤解，所以說好的 log 設定也是對開發系統來說很重要的一個課題！
 
-以 node.js 來說，雖然 javascript 本身就有提供如 `console.log`, `console.error` 等函數，
-不過要對應真實系統的需求可能還是稍嫌不足了一點，也因此有許多相關的函式庫應運而生，如
-[winston](https://github.com/winstonjs/winston),
-[bunyan](https://github.com/trentm/node-bunyan),
-[pino](https://github.com/pinojs/pino) 等。
-其中，pino 因為有高效的執行速度而知名，也是我在開發 node.js 時最常使用的函式庫。
+以 node.js 來說，雖然 javascript 本身就有提供如 `console.log`, `console.error` 等函數，不過要對應真實系統的需求可能還是稍嫌不足了一點，也因此有許多相關的函式庫應運而生，如[winston](https://github.com/winstonjs/winston),[bunyan](https://github.com/trentm/node-bunyan),[pino](https://github.com/pinojs/pino) 等。其中，pino 因為有高效的執行速度而知名，也是我在開發 node.js 時最常使用的函式庫。
 
 本文主要探討在 AWS Elastic Beanstalk 上使用 pino 的一些注意事項，包含：
 
@@ -28,13 +22,9 @@ log (日誌)一直以來都是我們在開發程式時重要的幫手，對於�
 
 ## 正確顯示 JSON 格式的 log
 
-使用 pino 的其中一個特色就是它使用了 **JSON 的格式**，雖然第一眼看起來比純文字要複雜一點，
-但好處就是在當你有大量 log 需要處理時，可以快速使用 JSON 資料中的屬性(像是 log 層級、時間戳等)
-過濾出你想要檢視的 log。
+使用 pino 的其中一個特色就是它使用了 **JSON 的格式**，雖然第一眼看起來比純文字要複雜一點，但好處就是在當你有大量 log 需要處理時，可以快速使用 JSON 資料中的屬性(像是 log 層級、時間戳等)過濾出你想要檢視的 log。
 
-不幸的是，因為 Amazon Linux 2 使用了 rsyslog 作為集中管理 log 的方案，
-在你的 node.js 應用程式送出 log 之後，rsyslog 還會在每行 log 開頭加入
-一段包含時間、IP 位址以及應用程式名稱的前綴
+不幸的是，因為 Amazon Linux 2 使用了 rsyslog 作為集中管理 log 的方案，在你的 node.js 應用程式送出 log 之後，rsyslog 還會在每行 log 開頭加入一段包含時間、IP 位址以及應用程式名稱的前綴
 
 從這樣:
 
@@ -50,8 +40,7 @@ Oct 10 17:00:00 ip-10-48-41-129 web: {"level":30,"time":1664851979134,"pid":2037
 
 而後果就是當 log 實際寫入檔案中儲存時，**JSON 的格式就被破壞掉了**，基本上也就喪失了原本使用 JSON 格式的意義。
 
-解決方案就是複寫預設的 rsyslog 設定檔。可以在根目錄的 .elasticbeanstalk 資料夾
-(沒有也可以自己建一個)底下加入一個 .config 設定檔(可任意命名)：
+解決方案就是複寫預設的 rsyslog 設定檔。可以在根目錄的 .elasticbeanstalk 資料夾(沒有也可以自己建一個)底下加入一個 .config 設定檔(可任意命名)：
 
 #### .elasticbeanstalk/log.config
 
@@ -76,36 +65,25 @@ files:
       {{end}}
 ```
 
-這裡我們用了一個沒有前綴，只有加入換行的 SimpleFormat 模板取代了預設的格式。
-這樣一來，儲存下來的 log 檔案就會是正統的 JOSN 格式了！
+這裡我們用了一個沒有前綴，只有加入換行的 SimpleFormat 模板取代了預設的格式。這樣一來，儲存下來的 log 檔案就會是正統的 JOSN 格式了！
 
-需要注意的是在 Amazon Linux 2 版本 5.1.0 之前跟之後的設定會稍有不同，
-上面的寫法適用於 5.1.0 之後的版本。更多細節可以參考
-[這份 gist](https://gist.github.com/sjlu/63bce0f7003b217bc800602c81fbce12#logs)
+需要注意的是在 Amazon Linux 2 版本 5.1.0 之前跟之後的設定會稍有不同，上面的寫法適用於 5.1.0 之後的版本。更多細節可以參考[這份 gist](https://gist.github.com/sjlu/63bce0f7003b217bc800602c81fbce12#logs)
 
-另外，加入這個設定檔之後，可能還需要重建(rebuild) Elastic Beanstalk 的環境，相關的改動才會生效。如果不想要每次改動設定都要重建環境的話，
-可以加入一個 post deploy 的 hook，在每次部署之後重啟 rsyslog 的服務。參考[這個解答](https://serverfault.com/a/1073793)
+另外，加入這個設定檔之後，可能還需要重建(rebuild) Elastic Beanstalk 的環境，相關的改動才會生效。如果不想要每次改動設定都要重建環境的話，可以加入一個 post deploy 的 hook，在每次部署之後重啟 rsyslog 的服務。參考[這個解答](https://serverfault.com/a/1073793)
 
 ## 將 log 依照層級寫入不同檔案
 
-雖然剛剛的設定解決了格式的問題，但在找資料的過程中我一直有個疑惑，
-就是在設定檔的這幾行：
+雖然剛剛的設定解決了格式的問題，但在找資料的過程中我一直有個疑惑，就是在設定檔的這幾行：
 
 ```
     *.=warning;*.=err;*.=crit;*.=alert;*.=emerg /var/log/{{.}}.stderr.log; SimpleFormat
     *.=info;*.=notice /var/log/{{.}}.stdout.log; SimpleFormat
 ```
 
-這裡的設定應該會將層級在 warning 以上的 log 寫入 `stderr.log`，
-並將 warning 以下的 log 寫入 `stdlog.log` 才對，
-但在實務上我們會發現所有的 log 都被寫入了 `stdlog.log`。
+這裡的設定應該會將層級在 warning 以上的 log 寫入 `stderr.log`，並將 warning 以下的 log 寫入 `stdlog.log` 才對，但在實務上我們會發現所有的 log 都被寫入了 `stdlog.log`。
 
-後來發現 pino 在不同 log 層級只是會在 JSON 中加入不同的 level 屬性值，
-但是 syslog 並有沒辦法分辨這個屬性，也因此所有從 node.js 應用程式
-寫入到 stdout(或 stderr) 的 log 對於 syslog 而言都會是同一個(預設)層級，
-自然也都會寫入到同一個檔案裡。
+後來發現 pino 在不同 log 層級只是會在 JSON 中加入不同的 level 屬性值，但是 syslog 並有沒辦法分辨這個屬性，也因此所有從 node.js 應用程式寫入到 stdout(或 stderr) 的 log 對於 syslog 而言都會是同一個(預設)層級，自然也都會寫入到同一個檔案裡。
 
-如果想讓 pino 的層級能夠反映到 syslog 的層級中，
-我使用的方法是用[pino-systemd-prefix-transport](https://www.npmjs.com/package/pino-systemd-prefix-transport)
+如果想讓 pino 的層級能夠反映到 syslog 的層級中，我使用的方法是用[pino-systemd-prefix-transport](https://www.npmjs.com/package/pino-systemd-prefix-transport)
 
-不用透過 syslog 直接用 node.js 寫入到檔案中可能也是一個相對來說比較方便的選擇。
+當然，不用透過 syslog 直接用 node.js 寫入到檔案中可能也是一個相對來說比較簡單的選擇。
